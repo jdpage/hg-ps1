@@ -139,6 +139,9 @@ main(int argc, char **argv) {
 
 	repo = get_repo();
 
+	if (repo == NULL)
+		return 0;
+
 	if (argc < 2)
 		format = ":%s:%s";
 	else
