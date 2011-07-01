@@ -45,7 +45,7 @@ get_branch(const char *repo) {
 	FILE *f;
 	char *branchfile, *branchname;
 	size_t plen, read, cchar, csize;
-	char c;
+	int k;
 
 	plen = strlen(repo);
 	SAFE_CHAR_MALLOC(branchfile, plen + 12);
@@ -72,7 +72,13 @@ get_branch(const char *repo) {
 	}
 
 	branchname[cchar] = 0;
-	SAFE_CHAR_REALLOC(branchname, strlen(branchname) + 1);
+	for (k = 0; k < cchar; k++) {
+		if (branchname[k] == '\n') {
+			branchname[k] = 0;
+			break;
+		}
+	}
+	SAFE_CHAR_REALLOC(branchname, k + 1);
 	
 	fclose(f);
 	return branchname;
